@@ -14,8 +14,24 @@ import com.todouno.model.User;
  */
 @Repository
 public interface IRepoUser extends JpaRepository<User, Integer>{
+	/**
+	 * define el metodo buscar por nombre de usuario (internamente JPA hace un select user y el where lo toma implicitamente por NombreUsuario) retorna un usuario en caso de encontrarlo
+	 * @param nu
+	 * @return
+	 */
 	Optional<User> findByNombreUsuario(String nu);
+	/**
+	 * define el metodo buscar por nombre de usuario (internamente JPA hace un select user y el where lo toma implicitamente por NombreUsuario) retorna falso o verdadero si no lo encuentra o si
+	 * @param nu
+	 * @return
+	 */
     boolean existsByNombreUsuario(String nu);
+    /**
+     * define el metodo buscar por email de usuario (internamente JPA hace un select user y el where lo toma implicitamente por Email) retorna verdadero o falso dependiente si existe el email ya
+     * en la base de datos
+     * @param email
+     * @return
+     */
     boolean existsByEmail(String email);
 		
 }

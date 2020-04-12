@@ -15,8 +15,19 @@ import com.todouno.model.Product;
  */
 @Repository
 public interface IRepoProduct extends JpaRepository<Product, Integer>{
-	
-		Product findByNameProduct(String nombre);
-		public boolean existsByNameProduct(String nombre);
+	/**
+	 * define el metodo buscar por nombre de producto (internamente JPA hace un select user y el where lo toma implicitamente por NombreTipoProducto) retorna 
+	 * un producto si lo encuentra
+	 * @param nombre
+	 * @return
+	 */
+	Product findByNameProduct(String nombre);
+	/**
+	* define el metodo buscar por nombre de producto (internamente JPA hace un select user y el where lo toma implicitamente por NombreTipoProducto) retorna 
+	 * un verdadero o falso si lo encuentra o no
+	 * @param nombre
+	 * @return
+	 */
+	public boolean existsByNameProduct(String nombre);
 
 }

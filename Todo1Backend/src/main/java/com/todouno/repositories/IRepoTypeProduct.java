@@ -12,8 +12,17 @@ import com.todouno.model.TypeProduct;
  */
 @Repository
 public interface IRepoTypeProduct extends JpaRepository<TypeProduct, Integer> {
-	
+	/**
+	 * define el metodo buscar por nombre de tipo de producto (internamente JPA hace un select user y el where lo toma implicitamente por NombreTipoProducto) retorna 
+	 * verdadero o falso si lo encuentra o no
+	 * @param nombre
+	 * @return
+	 */
 	public boolean existsByNombreTipoProducto(String nombre);
+	/**
+	 * define el metodo eliminar por nombre de tipo de producto (internamente JPA hace un select user y el where lo toma implicitamente por NombreTipoProducto)
+	 * @param nombre
+	 */
 	public void deleteByNombreTipoProducto(String nombre);
 	
 

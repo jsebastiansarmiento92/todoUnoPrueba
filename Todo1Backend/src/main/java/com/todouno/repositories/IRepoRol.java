@@ -15,6 +15,11 @@ import com.todouno.model.RolName;
  */
 @Repository
 public interface IRepoRol extends JpaRepository<Rol, Integer>{
+	/**
+	 * define el metodo eliminar por nombre de rol (internamente JPA hace un select user y el where lo toma implicitamente por RolNombre) retorna el rol si lo encuentra
+	 * @param rolNombre
+	 * @return
+	 */
 	Optional<Rol> findByRolNombre(RolName rolNombre);
 	
 }
