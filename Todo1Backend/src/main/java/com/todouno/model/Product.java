@@ -13,15 +13,18 @@ import javax.persistence.TemporalType;
 import javax.validation.constraints.NotBlank;
 
 import com.sun.istack.NotNull;
-
+/**clase modelo donde define atributos  del producto a ingresar, tambien puede ser un servicio
+ * @author Juan Sebastian Sarmiento jsebastiansarmiento92@gmail.com
+ * @version 12/04/2020
+ */
 @Entity
 @Table(name = "product")
 public class Product {
-
+	//atributo donde guarda el identificador o id unico del producto
 	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id_product;
-
+	
     @NotBlank
     @Column(unique = true)
     private String nameProduct;

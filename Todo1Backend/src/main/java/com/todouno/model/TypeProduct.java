@@ -5,7 +5,12 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.validation.constraints.NotBlank;
 
-
+/**
+ * Clase modelo donde define atributos
+ * @author Juan Sebastian Sarmiento jsebastiansarmiento92@gmail.com
+ *
+ * @version 12/04/2020
+ */
 @Entity
 public class TypeProduct {
 

@@ -8,7 +8,11 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 import com.sun.istack.NotNull;
-
+/**clase modelo donde define atributos
+ * @author Juan Sebastian Sarmiento jsebastiansarmiento92@gmail.com
+ *
+ * @version 12/04/2020
+ */
 @Entity
 public class Rol {
 
