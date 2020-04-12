@@ -4,6 +4,11 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import java.util.Set;
 
+/**
+ * 
+ * @author jsebastian sarmiento
+ *
+ */
 public class NewUser {
 	@NotBlank
     private String nombre;
