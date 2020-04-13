@@ -9,83 +9,117 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import com.todouno.model.User;
-
+/**
+ * clase donde implementa Userdetails el cual define metodos los cuales la clase JWTProvider usa para tener informacion del usuario y sesion de este
+ * @author Juan Sebastian Sarmiento jsebastiansarmiento92@gmail.com
+ *
+ * @version 12/04/2020
+ */
 public class UserPrincipal implements UserDetails{
 
-	
+	//atributo identificador del usuario (unico)
 	private Long id;
-    private String nombre;
-    private String nombreUsuario;
-    private String email;
-    private String password;
-    private Collection<? extends GrantedAuthority> authorities;
-	
-	
+	//atributo nombre completo del usuario
+	private String nombre;
+	//atributo nickname o nombre de cuenta del usuario
+	private String nombreUsuario;
+	//atributo donde guarda email del usuario
+	private String email;
+	//atributo donde guarda la contraseña ya encripatada del usuario
+	private String password;
+	//atributo don guarda privilegios o roles
+	private Collection<? extends GrantedAuthority> authorities;
 
 
-    public UserPrincipal(Long id, String nombre, String nombreUsuario, String email, String password, Collection<? extends GrantedAuthority> authorities) {
-        this.id = id;
-        this.nombre = nombre;
-        this.nombreUsuario = nombreUsuario;
-        this.email = email;
-        this.password = password;
-        this.authorities = authorities;
-    }
-    
-    public static UserPrincipal build(User usuario){
-        List<GrantedAuthority> authorities =
-                usuario.getRoles().stream().map(rol -> new SimpleGrantedAuthority(rol.getRolNombre().name())).collect(Collectors.toList());
-        return new UserPrincipal(usuario.getId(), usuario.getNombre(), usuario.getNombreUsuario(), usuario.getEmail(), usuario.getPassword(), authorities);
-    }
-    
-    public Long getId() {
-        return id;
-    }
 
-    public String getNombre() {
-        return nombre;
-    }
+	/**
+	 * cosntructor donde guarda la informacion del usuario 
+	 * @param id
+	 * @param nombre
+	 * @param nombreUsuario
+	 * @param email
+	 * @param password
+	 * @param authorities
+	 */
+	public UserPrincipal(Long id, String nombre, String nombreUsuario, String email, String password, Collection<? extends GrantedAuthority> authorities) {
+		this.id = id;
+		this.nombre = nombre;
+		this.nombreUsuario = nombreUsuario;
+		this.email = email;
+		this.password = password;
+		this.authorities = authorities;
+	}
+	/**
+	 * metodo el cual devuelve el usuario de la sesion
+	 * @param usuario
+	 * @return
+	 */
+	public static UserPrincipal build(User usuario){
+		List<GrantedAuthority> authorities =
+				usuario.getRoles().stream().map(rol -> new SimpleGrantedAuthority(rol.getRolNombre().name())).collect(Collectors.toList());
+		return new UserPrincipal(usuario.getId(), usuario.getNombre(), usuario.getNombreUsuario(), usuario.getEmail(), usuario.getPassword(), authorities);
+	}
+	//respectivos metodos set y get
+	/**
+	 * 
+	 * @return
+	 */
+	public Long getId() {
+		return id;
+	}
+	/**
+	 * 
+	 * @return
+	 */
+	public String getNombre() {
+		return nombre;
+	}
+	/**
+	 * 
+	 * @return
+	 */
+	public String getEmail() {
+		return email;
+	}
 
-    public String getEmail() {
-        return email;
-    }
-    
-    
-    @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        return authorities;
-    }
+	/**
+	 * metodo implmentado desde UserDetails el cual devuelve la lista de privilegios de usuario ya guardado
+	 */
+	@Override
+	public Collection<? extends GrantedAuthority> getAuthorities() {
+		return authorities;
+	}
 
-    @Override
-    public String getPassword() {
-        return password;
-    }
+	@Override
+	public String getPassword() {
+		return password;
+	}
 
-    @Override
-    public String getUsername() {
-        return nombreUsuario;
-    }
+	@Override
+	public String getUsername() {
+		return nombreUsuario;
+	}
 
-    @Override
-    public boolean isAccountNonExpired() {
-        return true;
-    }
+	@Override
+	public boolean isAccountNonExpired() {
+		return true;
+	}
 
-    @Override
-    public boolean isAccountNonLocked() {
-        return true;
-    }
+	@Override
+	public boolean isAccountNonLocked() {
+		return true;
+	}
 
-    @Override
-    public boolean isCredentialsNonExpired() {
-        return true;
-    }
+	@Override
+	public boolean isCredentialsNonExpired() {
+		return true;
+	}
 
-    @Override
-    public boolean isEnabled() {
-        return true;
-    }
-	
-	
+	@Override
+	public boolean isEnabled() {
+		return true;
+	}
+
+
 
 }

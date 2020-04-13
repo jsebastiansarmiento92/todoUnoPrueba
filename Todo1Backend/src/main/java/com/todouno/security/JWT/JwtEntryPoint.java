@@ -12,14 +12,21 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.stereotype.Component;
 
-
+/**
+ * Esta clase se utiliza para comprobar las credenciales en el login
+ * @author Juan Sebastian Sarmiento jsebastiansarmiento92@gmail.com
+ *
+ * @version 12/04/2020
+ */
 @Component
 public class JwtEntryPoint implements AuthenticationEntryPoint{
-	
+	//atributo para imprimir en nuestro servidor cualquier anomalia o aviso
     private static  final Logger logger = LoggerFactory.getLogger(JwtEntryPoint.class);
 	
 	
-	
+	/**
+	 * Utilizamos un objeto de la clase Logger para imprimir por consola el error y comprobar cual es el método que produce error
+	 */
 	@Override
 	public void commence(HttpServletRequest req, HttpServletResponse res, AuthenticationException e)
 			throws IOException, ServletException {

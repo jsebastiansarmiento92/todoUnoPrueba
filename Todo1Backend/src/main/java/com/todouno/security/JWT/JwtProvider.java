@@ -11,13 +11,13 @@ import org.springframework.security.core.Authentication;
 
 import java.util.Date;
 /**
- * clase donde el registro se realiza a travez de interfaz
+ * esta clase es el corazón de JWT, donde se crea el token, se valida y se extrae el nombre del usuario
  * @author Juan Sebastian Sarmiento jsebastiansarmiento92@gmail.com
  * @version 12/04/2020
  */
 @Component
 public class JwtProvider {
-	//atributo donde es el principal punto de entrada del usuario este se usa en varias clases por ese motivo es variable estatica
+	//atributo para imprimir en nuestro servidor cualquier anomalia o aviso
 	private static  final Logger logger = LoggerFactory.getLogger(JwtEntryPoint.class);
 
 	//atributo donde trae un valor que aporta para la creacion de token 

@@ -18,21 +18,27 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-
+/**
+ * Esta clase lo que hace es obtener el token y el usuario, este último a partir del nombre de usuario y comprueba si es la autenticación es correcta. 
+ * En caso afirmativo la añade al contexto y, por último, se añade el filtro
+ * @author Juan Sebastian Sarmiento jsebastiansarmiento92@gmail.com
+ *
+ * @version 12/04/2020
+ */
 public class JwtTokenFilter  extends OncePerRequestFilter {
 
 	
 	
 	
-	
+	//atributo para imprimir en nuestro servidor cualquier anomalia o aviso
 	private static  final Logger logger = LoggerFactory.getLogger(JwtTokenFilter.class);
-
+	//atributo que provee de token a las sesiones y asigna tiempo de sesion a esta
     @Autowired
     JwtProvider jwtProvider;
-
+    //atributo donde opera a travez de la base de datos donde extrae usuarios por nombre
     @Autowired
     UserDetailsServiceImpl userDetailsServiceImpl;
-
+    
     @Override
     protected void doFilterInternal(HttpServletRequest req, HttpServletResponse res, FilterChain filterChain) throws ServletException, IOException {
         try {
@@ -48,7 +54,11 @@ public class JwtTokenFilter  extends OncePerRequestFilter {
         }
         filterChain.doFilter(req, res);
     }
-
+    /**
+     * metodo que retorna el token generado
+     * @param request
+     * @return
+     */
     private String getToken(HttpServletRequest request){
         String authReq = request.getHeader("Authorization");
         if(authReq != null && authReq.startsWith("Bearer "))
