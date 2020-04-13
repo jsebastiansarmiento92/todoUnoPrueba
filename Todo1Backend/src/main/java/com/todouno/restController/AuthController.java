@@ -34,26 +34,39 @@ import com.todouno.model.User;
 import com.todouno.repositories.IRepoRol;
 import com.todouno.repositories.IRepoUser;
 import com.todouno.security.JWT.JwtProvider;
-
+/**
+ * clase que maneja las autenticaciones de los usuarios y registro
+ * @author Juan Sebastian Sarmiento jsebastiansarmiento92@gmail.com
+ * @version 12/04/2020
+ */
 @CrossOrigin(origins = "http://localhost:4200")
 @RestController
 @RequestMapping("/auth")
 public class AuthController {
+	//atributo de la clase la cual realiza una instacia cada vez que es requerida gracias a la anotacion @Autowired gracias a este atributo se encriptan las contraseñas
 	@Autowired
     PasswordEncoder passwordEncoder;
-
+	//atributo de la clase la cual realiza una instacia cada vez que es requerida gracias a la anotacion @Autowired 
     @Autowired
     AuthenticationManager authenticationManager;
-
+    //atributo de la clase la cual realiza una instacia cada vez que es requerida gracias a la anotacion @Autowired usando la interfaz de repositorio de usuarios para hacer una instancia de 
+    //ese repositorio
     @Autowired
     IRepoUser iRepoUser;
-
+    //atributo de la clase la cual realiza una instacia cada vez que es requerida gracias a la anotacion @Autowired usando la interfaz de repositorio de roles  para hacer una instancia de 
+    //ese repositorio
     @Autowired
     IRepoRol iRepoRol;
-
+    //atributo donde realiza instancia por usuario para guardar token y sesion entro otras credenciales necesarias
     @Autowired
     JwtProvider jwtProvider;
     
+    /**
+     * metodo para crear nuevo usuario o usuario en registro
+     * @param nuevoUsuario
+     * @param bindingResult
+     * @return
+     */
     @PostMapping("/nuevo")
     public ResponseEntity<?> nuevo(@Valid @RequestBody NewUser nuevoUsuario, BindingResult bindingResult){
     	System.out.println("ingreso a crear nuevo usuario");
@@ -83,7 +96,12 @@ public class AuthController {
         iRepoUser.save(usuario);
         return new ResponseEntity(new Mensaje("usuario guardado"), HttpStatus.CREATED);
     }
-
+    /**
+     * metodo para verificar la sesion del usuario una vez este ha verificado retorna de tipo JwtDTO 
+     * @param loginUsuario
+     * @param bindingResult
+     * @return
+     */
     @PostMapping("/login")
     public ResponseEntity<JwtDTO> login(@Valid @RequestBody LoginUser loginUsuario, BindingResult bindingResult){
         if(bindingResult.hasErrors())

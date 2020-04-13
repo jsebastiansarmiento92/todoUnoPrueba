@@ -21,24 +21,32 @@ import com.todouno.DTO.Mensaje;
 import com.todouno.model.Product;
 import com.todouno.repositories.IRepoProduct;
 
-
-
-
-
-
+/**
+ * clase la cual maneja los productos  de la base de datos enesta gracias a la interfaz de repositorio se realizan los metodos necesarios para la CRUD
+ * @author Juan Sebastian Sarmiento jsebastiansarmiento92@gmail.com
+ *
+ * @version 12/04/2020
+ */
 @CrossOrigin(origins = "http://localhost:4200",maxAge = 3600)
 @RestController
 @RequestMapping("/products")
 public class ProductController {
-
+	//atributo el cual genera una instancia del ingreso cada vez que se requiere
 	@Autowired
 	private IRepoProduct iRepoProduct;
-	
+	/**
+	 * metodo el cual lista todos los ingresos de la base de datos
+	 * @return
+	 */
 	@GetMapping
 	public List<Product>listar(){
 		return iRepoProduct.findAll();
 	}
-	
+	/**
+	 * metodo con el cual se inserta un producto con la anotacion @PreAuthorize limita el rol el cual esta autorizado para insertar productos a la base de datos 
+	 * @param product
+	 * @return
+	 */
 	@PostMapping
 	@PreAuthorize("hasRole('ADMIN')")
 	public ResponseEntity insertar(@RequestBody Product product){
@@ -51,7 +59,11 @@ public class ProductController {
         iRepoProduct.save(product);
         return new ResponseEntity(new Mensaje("producto guardado"), HttpStatus.CREATED);
     }
-	
+	/**
+	 * metodo con el cual devuelve un producto buscado por id de este
+	 * @param id
+	 * @return
+	 */
 	@GetMapping(value = "/{id}")
 	public Optional<Product> getProduct(@PathVariable("id") Integer id){
 		
@@ -61,7 +73,11 @@ public class ProductController {
      //   return new ResponseEntity<Product>(product, HttpStatus.OK);
 		return iRepoProduct.findById(id);
 	}
-	
+	/**
+	 * 
+	 * @param nombre
+	 * @return
+	 */
 	@GetMapping("/nombre/{id}")
 	public Product getProduct(@PathVariable("id") String nombre){
 		
@@ -72,7 +88,12 @@ public class ProductController {
 		return iRepoProduct.findByNameProduct(nombre);
 	}
 	
-	
+	/**
+	 * metodo el cual modifica el prodcuto buscado por id, este caso se usa mas que todo para modificar el stock en ingreso y salida
+	 * @param product
+	 * @param id
+	 * @return
+	 */
 	@PutMapping ("/{id}")
 //	@PreAuthorize("hasRole('ADMIN','USER')") Pendiente por verificar hasta que punto o campos puede modificar el usuario a parte del stock de compra
 	public ResponseEntity modificar(@RequestBody Product product,@PathVariable("id")Integer id){
@@ -94,9 +115,13 @@ public class ProductController {
 	        iRepoProduct.save(prodUpdate);
 	        return new ResponseEntity(new Mensaje("producto actualizado"), HttpStatus.CREATED);
 	}
-	
+	/**
+	 * metodo el cual elimina buscando por id un producto seleccionado 
+	 * @param id
+	 * @return
+	 */
 	@DeleteMapping(value = "/{id}")
-	@PreAuthorize("hasRole('ADMIN')")
+	@PreAuthorize("hasRole('ADMIN')")//Pendiente poner restriccion de no poder eliminar producto si cuenta con stock
 	public ResponseEntity eliminar(@PathVariable("id") Integer id) {
 	    if(!iRepoProduct.existsById(id))
             return new ResponseEntity(new Mensaje("no existe ese producto"), HttpStatus.NOT_FOUND);

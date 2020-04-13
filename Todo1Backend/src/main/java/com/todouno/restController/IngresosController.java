@@ -19,22 +19,34 @@ import org.springframework.web.bind.annotation.RestController;
 import com.todouno.DTO.Mensaje;
 import com.todouno.model.Ingreso;
 import com.todouno.repositories.IRepoIngreso;
-
-@CrossOrigin(origins = "http://localhost:4200",maxAge = 3600)
+/**
+ * clase la cual maneja los ingresos de la base de datos enesta gracias a la interfaz de repositorio se realizan los metodos necesarios para la CRUD
+ * @author Juan Sebastian Sarmiento jsebastiansarmiento92@gmail.com
+ *
+ * @version 12/04/2020
+ */
+@CrossOrigin(origins = "http://localhost:4200",maxAge = 3600) //anotacion para dar permisos de metodos (POST,PUT,GET,DELETE) al servidor donde corre el fronend 
 @RestController
 @RequestMapping("/ingreso")
 public class IngresosController {
 	
-	
+	//atributo el cual genera una instancia del ingreso cada vez que se requiere
 	@Autowired
 	private IRepoIngreso iRepoIngreso;
-	
+	/**
+	 * metodo el cual lista todos los ingresos de la base de datos
+	 * @return
+	 */
 	@GetMapping
 	public List<Ingreso>listar(){
 		
 		return iRepoIngreso.findAll();
 	}
-	
+	/**
+	 * metodo con el cual se inserta un ingreso con la anotacion @PreAuthorize limita el rol el cual esta autorizado para insertar ingresos a la base de datos 
+	 * @param ingreso
+	 * @return retorna respuesta de confirmacion si efectivamente el ingreso fue exitoso
+	 */ 
 	@PostMapping
 	@PreAuthorize("hasRole('ADMIN')")
 	public ResponseEntity insertar(@RequestBody Ingreso ingreso){
@@ -42,7 +54,11 @@ public class IngresosController {
         iRepoIngreso.save(ingreso);
         return new ResponseEntity(new Mensaje("Ingreso guardado"), HttpStatus.CREATED);
     }
-	
+	/**
+	 * metodo con el cual devuelve un ingreso buscado por id de este
+	 * @param id
+	 * @return
+	 */
 	@GetMapping(value = "/{id}")
 	public Optional<Ingreso> getIngreso(@PathVariable("id") Integer id){
 		
@@ -50,6 +66,12 @@ public class IngresosController {
 		return iRepoIngreso.findById(id);
 
 	}
+	/**
+	 * metodo el cual modifica el ingreso buscado por id, se espoera que la modificacion no varie del valor 
+	 * @param ingreso
+	 * @param id
+	 * @return
+	 */
 	@PutMapping ("/{id}")
 	@PreAuthorize("hasRole('ADMIN')")
 	public ResponseEntity modificar(@RequestBody Ingreso ingreso,@PathVariable("id")Integer id){
@@ -64,7 +86,4 @@ public class IngresosController {
 	        iRepoIngreso.save(ingresoUpdate);
 	        return new ResponseEntity(new Mensaje("ingreso actualizado"), HttpStatus.CREATED);
 	}
-	
-	
-	
 }

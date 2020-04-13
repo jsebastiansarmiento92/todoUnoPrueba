@@ -20,21 +20,34 @@ import com.todouno.DTO.Mensaje;
 
 import com.todouno.model.Salida;
 import com.todouno.repositories.IRepoSalida;
-
+/**
+ * clase la cual maneja las salidas  de la base de datos enesta gracias a la interfaz de repositorio se realizan los metodos necesarios para la CRUD
+ * @author Juan Sebastian Sarmiento jsebastiansarmiento92@gmail.com
+ *
+ * @version 12/04/2020
+ */
 @CrossOrigin(origins = "http://localhost:4200")
 @RestController
 @RequestMapping("/salidas")
 public class SalidasController {
-
+	//atributo el cual genera una instancia de la salida cada vez que se requiere
 	@Autowired
 	private IRepoSalida repoSalida;
 	
+	/**
+	 * metodo el cual lista todas salidas de la base de datos
+	 * @return
+	 */
 	@GetMapping
 	public List<Salida>listar(){
 		
 		return repoSalida.findAll();
 	}
-	
+	/**
+	 * metodo con el cual se inserta una salida con la anotacion, en este caso no limita quien puede hacer una insercion de salida ya que usuario comun puede realizar a la hora de compra
+	 * @param salida
+	 * @return
+	 */
 	@PostMapping
 	public ResponseEntity insertar(@RequestBody Salida salida){
 		System.out.println("salida a guardad id "+ salida.getIdProductIdSalida()+" valor "+salida.getCantidadSalida());
@@ -42,7 +55,11 @@ public class SalidasController {
         return new ResponseEntity(new Mensaje("Salida guardada"), HttpStatus.CREATED);
 
     }
-	
+	/**
+	 * metodo con el cual devuelve una salida buscado por id de esta ()
+	 * @param id
+	 * @return
+	 */
 	@GetMapping(value = "/{id}")
 	public Optional<Salida> getSalida(@PathVariable("id") Integer id){
 		
@@ -50,9 +67,13 @@ public class SalidasController {
 		return repoSalida.findById(id);
 
 	}
-	
+	/**
+     * metodo el cual modifica la salida buscado por id.
+	 * @param salida
+	 * @param id
+	 * @return
+	 */
 	@PutMapping ("/{id}")
-
 	public ResponseEntity modificar(@RequestBody Salida salida,@PathVariable("id")Integer id){
 		 if(!repoSalida.existsById(id))
 	            return new ResponseEntity(new Mensaje("no existe ese ingreso"), HttpStatus.NOT_FOUND);
